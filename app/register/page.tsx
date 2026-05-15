@@ -21,6 +21,22 @@ export default function RegisterPage() {
     about: "",
   });
 
+  const [notification, setNotification] = useState({
+    type: "" as "success" | "error" | "",
+    message: "",
+  });
+
+  const showNotification = (
+    message: string,
+    type: "success" | "error"
+  ) => {
+    setNotification({ message, type });
+
+    window.setTimeout(() => {
+      setNotification({ type: "", message: "" });
+    }, 5000);
+  };
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement
@@ -46,7 +62,7 @@ export default function RegisterPage() {
       !form.password ||
       !form.confirmPassword
     ) {
-      alert("Please fill all fields");
+      showNotification("Please fill all fields", "error");
       return;
     }
 
@@ -54,7 +70,7 @@ export default function RegisterPage() {
       form.password !==
       form.confirmPassword
     ) {
-      alert("Password not match");
+      showNotification("Password not match", "error");
       return;
     }
 
@@ -72,16 +88,32 @@ localStorage.setItem(
   "user",
   JSON.stringify(userData)
 );
+showNotification("Registration successful! Redirecting…", "success");
 
-alert("Register Success");
-
-router.push("/login");
+window.setTimeout(() => {
+  router.push("/login");
+}, 800);
   };
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f5f5f5] px-4 py-10">
       {/* BG */}
       <div className="absolute top-0 h-70 w-full rounded-b-[60px] bg-white" />
+
+      {/* NOTIFICATION POPUP */}
+      {notification.message && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+          <div
+            className={`rounded-3xl border px-6 py-4 text-sm font-medium shadow-lg ${
+              notification.type === "success"
+                ? "border-green-200 bg-green-50 text-green-700"
+                : "border-red-200 bg-red-50 text-red-700"
+            }`}
+          >
+            {notification.message}
+          </div>
+        </div>
+      )}
 
       <div className="relative z-10 w-full max-w-2xl">
         {/* TITLE */}
