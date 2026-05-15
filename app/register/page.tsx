@@ -48,52 +48,46 @@ export default function RegisterPage() {
     });
   };
 
-  const handleRegister = (
-    e: React.FormEvent
-  ) => {
+  function handleRegister(e: React.SubmitEvent) {
     e.preventDefault();
 
-    if (
-      !form.firstName ||
+    if (!form.firstName ||
       !form.lastName ||
       !form.phone ||
       !form.country ||
       !form.email ||
       !form.password ||
-      !form.confirmPassword
-    ) {
+      !form.confirmPassword) {
       showNotification("Please fill all fields", "error");
       return;
     }
 
-    if (
-      form.password !==
-      form.confirmPassword
-    ) {
+    if (form.password !==
+      form.confirmPassword) {
       showNotification("Password not match", "error");
       return;
     }
 
-  const userData = {
-  firstName: form.firstName,
-  lastName: form.lastName,
-  phone: form.phone,
-  country: form.country,
-  email: form.email,
-  password: form.password,
-  about: form.about,
-};
+    const userData = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      phone: form.phone,
+      country: form.country,
+      email: form.email,
+      password: form.password,
+      about: form.about,
+    };
 
-localStorage.setItem(
-  "user",
-  JSON.stringify(userData)
-);
-showNotification("Registration successful! Redirecting…", "success");
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+    showNotification("Registration successful! Redirecting…", "success");
 
-window.setTimeout(() => {
-  router.push("/login");
-}, 800);
-  };
+    window.setTimeout(() => {
+      router.push("/login");
+    }, 800);
+  }
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f5f5f5] px-4 py-10">

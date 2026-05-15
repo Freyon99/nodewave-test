@@ -26,10 +26,10 @@ export default function LoginPage() {
 
     window.setTimeout(() => {
       setNotification({ type: "", message: "" });
-    }, 5000);
+    }, 800);
   };
 
-  function handleLogin(e: React.FormEvent) {
+  function handleLogin(e: React.SubmitEvent) {
     e.preventDefault();
 
     if (!email || !password) {
